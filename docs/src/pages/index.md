@@ -66,7 +66,7 @@ This guide is divided into two tracks:
 
 #### Part 1. Set up a website to host
 
-If you have files for a website that you'd like to host locally, go ahead and skip to the [next step](part-2-start-your-onion-site-with-onionshare)! Just make sure they're in a single folder and everything in the folder should be available on the website.
+If you have files for a website that you'd like to host locally, go ahead and skip to the [next step](#part-2-start-your-onion-site-with-onionshare)! Just make sure they're in a single folder and everything in the folder should be available on the website.
 
 If you don't already have a website that you'd like to host, or you'd like a sample website to try this guide with, you can download [a simple html file](https://github.com/lizzthabet/self-hosting-with-tor/blob/main/site/public/index.html) that's included alongside this guide on Github.
 
