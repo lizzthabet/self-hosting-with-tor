@@ -69,13 +69,20 @@ hr::before, markdown hr::before {
 }
 
 code, .markdown code {
+  // The default background for code snippets, inline and block,
+  // doesn't have much contrast between the page bg, so override
   background-color: var(--code-background);
   font-size: 0.85rem;
+}
+
+pre, .markdown pre {
+  background-color: var(--code-background);
 }
 
 blockquote,
 .markdown .book-hint.info {
   border: 2px solid #b5b5b5;
   background-color: #e4e4e4;
+  margin: 1.5rem 0;
   // background-color: #b5b5b5;
 }

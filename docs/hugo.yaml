@@ -12,4 +12,4 @@ params:
   BookTOC: false
   # Info for editing this content
   BookRepo: 'https://github.com/lizzthabet/self-hosting-with-tor'
-  BookEditPath: 'docs'
+  BookEditPath: 'tree/main/docs'

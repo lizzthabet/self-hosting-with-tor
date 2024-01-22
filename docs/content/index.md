@@ -10,14 +10,14 @@ A developing guide to homemade internets using open-source & privacy-centric too
 ---
 
 #### What is Tor?
-[Tor](https://torproject.org/) is an open-source, privacy-centric tool for accessing information anonymously over networks. It's used [around the world](https://metrics.torproject.org/) to circumvent censorship and obscure information from third-party data collection and tracking. Much of the Tor network infrastructure is volunteer-run and operates on a model of distributed trust.<!-- define or go into detail here: what's this term mean? -->
+[Tor](https://torproject.org/) is an open-source, privacy-centric tool for accessing information anonymously over networks. It's used [around the world](https://metrics.torproject.org/) to circumvent censorship and obscure information from third-party data collection and tracking. Much of the Tor network infrastructure is volunteer-run and operates on a model of distributed trust.
 
-At its simplest, the way Tor[^1] works is by routing network requests through a series of proxies that help obscure the identity of the computer that's making the request. It makes your internet traffic more anonymous by obscuring your computer's IP address from your Internet Service Provider (ISP) and the websites you visit.
+At its simplest, the way Tor works is by routing network requests through a series of proxies that help obscure the identity of the computer that's making the request. It makes your internet traffic more anonymous by obscuring your computer's IP address from your Internet Service Provider (ISP) and the websites you visit.
 
 Onion websites (also called *hidden services* or *onion services*) are websites that can only be accessed through using the Tor network. This is what this guide will focus on. Onion services allow the computer that's hosting the website content&mdash;not just the computer accessing it&mdash;to also remain anonymous while they're communicating.
 
-<!-- TODO: Add more detail to this explanation, and make sure footnote markdown works -->
-[^1]Tor is different than BitTorrent, which is a file-sharing protocol that allows people to host, or seed, content as they access it. It's also really neat! But this guide won't cover it.
+<!-- TODO: Add more detail to this description of BitTorrent -->
+<!-- Tor is different than BitTorrent, which is a file-sharing protocol that allows people to host, or seed, content as they access it. It's also really neat! But this guide won't cover it. -->
 
 #### Why self-host?
 Self-hosting generally refers to hosting and maintaining applications on your own servers, instead of renting time or space on servers run by cloud providers, like Amazon Web Services. This guide borrows ideas from the [handmade web](https://luckysoap.com/statements/handmadeweb.html) and focuses on self-hosting as the practice of running a website from a computer that you own or share on a local scale.

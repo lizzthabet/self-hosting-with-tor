@@ -5,7 +5,7 @@
   </label>
   {{ end }}
 
-  <strong>{{ partial "docs/title" . }}</strong>
+  <em class="text-center" style="margin: auto; display: block;">{{ partial "docs/title" . }}</em>
 
   {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
   <label for="toc-control">

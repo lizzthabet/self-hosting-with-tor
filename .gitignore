@@ -4,16 +4,15 @@
 # Production
 docs/build
 
-# Local files I want to keep around
-docs/**/examples
-
 # WIP files that should be ignored right now
 # but should be removed later
 /mkdocs
 
 # Generated files
-.docusaurus
 .cache-loader
+.hugo_build.lock
+public/
+resources/
 
 # Misc
 .DS_Store
