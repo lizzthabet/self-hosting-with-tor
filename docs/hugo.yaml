@@ -1,0 +1,15 @@
+baseURL: 'https://self-host.lizz.website/'
+languageCode: 'en-us'
+title: 'Self-hosting with Tor'
+theme: 'hugo-book'
+
+params:
+  # Don't display the menu
+  BookMenu: false
+  # Don't display search functionality
+  BookSearch: false
+  # Don't display page-level TOC
+  BookTOC: false
+  # Info for editing this content
+  BookRepo: 'https://github.com/lizzthabet/self-hosting-with-tor'
+  BookEditPath: 'tree/main/docs'

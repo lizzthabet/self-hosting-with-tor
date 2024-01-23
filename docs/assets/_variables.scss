@@ -1,0 +1,64 @@
+$font-size-base: 1.3rem;
+
+$body-min-width: 10rem;
+$container-max-width: 40rem;
+$toc-width: 0;
+$menu-width: 0;
+$mobile-breakpoint: $menu-width + $container-max-width * 1.35 + $toc-width;
+
+// Themes
+@mixin theme-light {
+  --color-link: #0000FF;
+  --color-visited-link: #800080;
+
+  --body-background: #f3f3f3;
+  --code-background: white;
+  --body-font-color: #333333;
+
+  --hint-color-info: blue;
+  --hint-color-warning: yellow;
+  --hint-color-danger: red;
+}
+
+// TODO: Style in dark theme!
+// @mixin theme-dark {
+//   --gray-100: rgba(255, 255, 255, 0.1);
+//   --gray-200: rgba(255, 255, 255, 0.2);
+//   --gray-500: rgba(255, 255, 255, 0.5);
+
+//   --color-link: #84b2ff;
+//   --color-visited-link: #b88dff;
+
+//   --body-background: #343a40;
+//   --body-font-color: #e9ecef;
+
+//   --icon-filter: brightness(0) invert(1);
+
+//   --hint-color-info: #6bf;
+//   --hint-color-warning: #fd6;
+//   --hint-color-danger: #f66;
+// }
+
+// TODO: Go through these variables to see if they're useful
+:root {
+  --purple: #800080;
+  --purple-dark: #730073;
+  --purple-darker: #6d006d;
+  --purple-darkest: #5a005a;
+  --purple-light: #8d008d;
+  --purple-lighter: #930093;
+  --purple-lightest: #a600a6;
+  --background-color: #f3f3f3;
+
+  --blue: #0000FF;
+}
+
+[data-theme='dark'] {
+  --purple: #d8a5ff;
+  --purple-dark: #c67bff;
+  --purple-darker: #bd66ff;
+  --purple-darkest: #a127ff;
+  --purple-light: #eacfff;
+  --purple-lighter: #f3e4ff;
+  --purple-lightest: #ffffff;
+}

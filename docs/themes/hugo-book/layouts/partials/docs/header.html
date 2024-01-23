@@ -1,0 +1,15 @@
+<div class="flex align-center justify-between">
+  {{ if default true (default .Site.Params.BookMenu .Params.BookMenu) }}
+  <label for="menu-control">
+    <img src="{{ "svg/menu.svg" | relURL }}" class="book-icon" alt="Menu" />
+  </label>
+  {{ end }}
+
+  <em class="text-center" style="margin: auto; display: block;">{{ partial "docs/title" . }}</em>
+
+  {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+  <label for="toc-control">
+    <img src="{{ "svg/toc.svg" | relURL }}" class="book-icon" alt="Table of Contents" />
+  </label>
+  {{ end }}
+</div>
