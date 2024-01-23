@@ -13,7 +13,6 @@ $mobile-breakpoint: $menu-width + $container-max-width * 1.35 + $toc-width;
 
   --body-background: #f3f3f3;
   --code-background: white;
-  // --code-background: #e5e5e5;
   --body-font-color: #333333;
 
   --hint-color-info: blue;
@@ -21,6 +20,7 @@ $mobile-breakpoint: $menu-width + $container-max-width * 1.35 + $toc-width;
   --hint-color-danger: red;
 }
 
+// TODO: Style in dark theme!
 // @mixin theme-dark {
 //   --gray-100: rgba(255, 255, 255, 0.1);
 //   --gray-200: rgba(255, 255, 255, 0.2);
@@ -39,47 +39,26 @@ $mobile-breakpoint: $menu-width + $container-max-width * 1.35 + $toc-width;
 //   --hint-color-danger: #f66;
 // }
 
+// TODO: Go through these variables to see if they're useful
 :root {
-  --ifm-color-primary: #800080;
-  --ifm-color-primary-dark: #730073;
-  --ifm-color-primary-darker: #6d006d;
-  --ifm-color-primary-darkest: #5a005a;
-  --ifm-color-primary-light: #8d008d;
-  --ifm-color-primary-lighter: #930093;
-  --ifm-color-primary-lightest: #a600a6;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --ifm-background-color: #f3f3f3;
+  --purple: #800080;
+  --purple-dark: #730073;
+  --purple-darker: #6d006d;
+  --purple-darkest: #5a005a;
+  --purple-light: #8d008d;
+  --purple-lighter: #930093;
+  --purple-lightest: #a600a6;
+  --background-color: #f3f3f3;
 
-  /* Custom colors */
-  --custom-color-blue: #0000FF;
-
-  /* Layout */
-  --ifm-container-width: 800px;
-  --ifm-container-width-xl: 800px;
-
-  /* Typography */
-  --ifm-code-font-size: 75%;
-  --ifm-font-family-base: Times, "Times New Roman", serif;
-  --ifm-line-height-base: 1.3;
-  --ifm-font-size-base: 1.3rem;
-  --ifm-paragraph-margin-bottom: 1rem;
-
-  /* Headings */
-  --ifm-h1-font-size: 2rem;
-  --ifm-h2-font-size: 1.5rem;
-  --ifm-h3-font-size: 1.25rem;
-  --ifm-h4-font-size: 1rem;
-  --ifm-h5-font-size: 0.875rem;
-  --ifm-h6-font-size: 0.85rem;
+  --blue: #0000FF;
 }
 
 [data-theme='dark'] {
-  --ifm-color-primary: #d8a5ff;
-  --ifm-color-primary-dark: #c67bff;
-  --ifm-color-primary-darker: #bd66ff;
-  --ifm-color-primary-darkest: #a127ff;
-  --ifm-color-primary-light: #eacfff;
-  --ifm-color-primary-lighter: #f3e4ff;
-  --ifm-color-primary-lightest: #ffffff;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --purple: #d8a5ff;
+  --purple-dark: #c67bff;
+  --purple-darker: #bd66ff;
+  --purple-darkest: #a127ff;
+  --purple-light: #eacfff;
+  --purple-lighter: #f3e4ff;
+  --purple-lightest: #ffffff;
 }
