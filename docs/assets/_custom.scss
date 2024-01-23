@@ -18,7 +18,7 @@ h6, .markdown h6 {
 
 .book-page {
   // dotted, dashed, double, groove, ridge, inset, outset
-  border: 4mm double var(--ifm-color-primary-lighter);
+  border: 4mm double var(--purple);
   margin: 2rem 0;
   padding: 2rem;
 }
@@ -58,7 +58,7 @@ hr, .markdown hr {
 
 hr::before, markdown hr::before {
   display: inline-block;
-  color: var(--ifm-color-primary);
+  color: var(--purple);
   content: "~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~";
   font-size: 1.75rem;
   height: 100%;
