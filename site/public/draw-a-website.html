@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" class="grid">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>welcome to my onion place</title>
+    <style>
+      html {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 18px;
+      }
+
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .grid {
+        background-size: 50px 50px;
+        background-image:
+          linear-gradient(to right, lightgray 1px, transparent 1px),
+          linear-gradient(to bottom, lightgray 1px, transparent 1px);
+      }
+
+      header {
+        background-color: blue;
+        box-sizing: border-box;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        left: 0;
+        margin-top: 1px;
+        padding: 10px 50px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 50px;
+      }
+
+      header > a {
+        color: white;
+      }
+
+      a, a:visited {
+        font-size: 1.25rem;
+        color: blue;
+      }
+
+      button {
+        color: black;
+        font-size: 1rem;
+      }
+
+      /* important for sizing and positioning */
+      figure,
+      section,
+      fieldset {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      fieldset {
+        border: unset;
+      }
+
+      /* Basic helper styles */
+      .cell {
+        z-index: 1;
+        height: 50px;
+        width: 50px;
+      }
+
+      .circle {
+        border-radius: 25px;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .hidden-with-fade {
+        opacity: 0 !important;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      /* To be used with .hidden-with-fade,
+      either add or remove .hidden-with-fade
+      while keeping .fade */
+      .fade {
+        transition: opacity 2s ease;
+        opacity: 1;
+      }
+
+      /* For text */
+      .left { 
+        padding: 10px;
+        user-select: none;
+      }
+
+      /* For text */
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        user-select: none;
+      }
+
+      /* For common game elements */
+      .controls {
+        bottom: 0;
+        position: fixed;
+        right: 0;
+        text-align: right;
+        z-index: 5;
+      }
+
+      .controls-details {
+        padding: 1rem;
+      }
+
+      .controls-details[open] > .controls-label {
+        margin-bottom: 1rem;
+      }
+
+      .controls-label {
+        cursor: pointer;
+      }
+
+      .controls-button {
+        border: 1px solid buttonborder;
+        border-radius: 3px;
+        box-sizing: border-box;
+        font-size: 1.25rem;
+        line-height: 1;
+        height: 50px;
+        padding: 2px;
+        width: 50px;
+        text-align: center;
+      }
+
+      .controls-button.two-cell-h {
+        width: 100px;
+      }
+
+      .controls-button.three-cell-h {
+        width: 150px;
+      }
+
+      /* Animations for making stuff appear & disappear */
+      @keyframes appear {
+        0% {
+          opacity: 0;
+          z-index: -1;
+        }
+        100% {
+          opacity: 1;
+          z-index: 1000;
+        }
+      }
+      @keyframes disappear {
+        0% {
+          opacity: 1;
+          z-index: 1000;
+        }
+        100% {
+          opacity: 0;
+          z-index: -1;
+        }
+      }
+
+      .appear {
+        animation-name: appear;
+        animation-duration: 2s; 
+      }
+
+      .disappear {
+        animation-name: disappear;
+        animation-duration: 2s; 
+      }
+
+      .veil {
+        background-color: white;
+        left: 0;
+        height: 100vh;
+        overflow: hidden;
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        z-index: -1;
+      }
+
+      /* More common game elements */
+
+      #you {
+        z-index: 4;
+        font-weight: bold;
+        text-decoration: underline;
+        color: black;
+        background-color: white;
+        border-radius: 25px;
+        height: 45px;
+        width: 45px;
+      }
+
+      .wave {
+        overflow: hidden;
+      }
+
+      .wave.wave-inverse,
+      .wave-text.wave-inverse {
+        background-color: blue;
+        color: white;
+      }
+
+      .wave::before {
+        animation:
+          backNForth 2s linear infinite,
+          upNDown 1s linear infinite alternate;
+        content: "~~~~~~~~~~~~~~~~~~";
+        font-size: 2.5rem;
+        color: blue;
+        width: 100%;
+        position: relative;
+      }
+
+      .wave.wave-inverse::before,
+      .wave.wave-transparent::before {
+        color: white;
+      }
+
+      @keyframes backNForth {
+        from {
+          left: 0px;
+        }
+        
+        to {
+          left: -50px;
+        }
+      }
+
+      @keyframes upNDown {
+        from {
+          top: -5px;
+        }
+        
+        to {
+          top: 5px;
+        }
+      }
+
+      /* directions */
+
+      .info-section {
+        background-color: white;
+        font-size: 1.25rem;
+        margin: 1px;
+        width: min(calc(100vw - 200px), 599px);
+        z-index: 2;
+      }
+
+      .info-list {
+        margin-top: 0;
+      }
+
+      li {
+        margin-bottom: 15px;
+      }
+
+      code {
+        background-color: #e5e5e5;
+        border-radius: 3px;
+        font-size: 0.8em;
+        padding: 2px 4px;
+      }
+
+      .mini-symbol {
+        font-size: 0.8rem;
+      }
+
+      .dismiss-button {
+        display: block;
+        font-size: 1.125rem;
+        margin-left: auto;
+      }
+
+      .start-here {
+        height: 50px;
+        margin: 1px;
+        font-size: 1.125rem;
+        font-style: italic;
+      }
+
+      /* palette display */
+      .palette-wrapper {
+        height: 50px;
+        display: flex;
+      }
+
+      .palette + .palette {
+        margin-left: 4px;
+      }
+
+      .palette-selected {
+        box-shadow: 0px 0px 10px 1px blue;
+      }
+
+      #palette-1.palette-selected {
+        box-shadow: 0px 0px 10px 1px sienna;
+      }
+
+      #palette-2.palette-selected {
+        box-shadow: 0px 0px 10px 1px green;
+      }
+
+      #palette-4.palette-selected {
+        box-shadow: 0px 0px 10px 1px gray;
+      }
+
+      #palette-5.palette-selected {
+        box-shadow: 0px 0px 8px 3px wheat;
+      }
+
+      #palette-6.palette-selected {
+        box-shadow: 0px 0px 10px 1px goldenrod;
+      }
+
+      #palette-7.palette-selected {
+        box-shadow: 0px 0px 10px 1px purple;
+      }
+
+      #palette-8.palette-selected {
+        box-shadow: 0px 0px 10px 1px violet;
+      }
+
+      .hack {
+        background-color: white;
+        width: 1px;
+        height: 1px;
+      }
+    </style>
+    <script>
+      const COLOR_PALETTE = ["sienna", "green", "blue", "gray", "wheat", "goldenrod", "purple", "violet", "wave", "wave-inverse"]
+      const GRID_SIZE_PX = 50
+      const UP = 'up'
+      const DOWN = 'down'
+      const LEFT = 'left'
+      const RIGHT = 'right'
+      const WINDOW_VIEW_GRID_BUFFER = 5;
+      const IS_ONION_SITE = window.location && window.location.host.endsWith(".onion")
+
+      const initialPositions = {
+        "#you": [{ x: 2, y: 2 }],
+        "#pointer": [{ x: 4, y: 2, center: false }],
+      }
+
+      const state = {
+        boundaries: [{ startX: 0, startY: 0 }],
+        landscapeMap: {}, // indexed by location, { position: {startX, startY}, color: ''}
+        newLandscapeColor: COLOR_PALETTE[9],
+      }
+
+      function toggleHiddenClass(element, visible = true) {
+        if (element && visible) {
+          if (element.classList.contains("fade")) {
+            element.classList.remove("hidden-with-fade")
+          } else {
+            element.classList.remove("hidden")
+          }
+        } else if (element && !visible) {
+          if (element.classList.contains("fade")) {
+            element.classList.add("hidden-with-fade")
+          } else {
+            element.classList.add("hidden")
+          }
+        }
+      }
+
+      function showOrHideSelector(selector, visible = true) {
+        const element = document.querySelector(selector)
+        toggleHiddenClass(element, visible)
+      }
+
+      function showOrHideSelectorList(selector, visible = true) {
+        const elements = document.querySelectorAll(selector)
+        elements.forEach(e => toggleHiddenClass(e, visible))
+      }
+
+      function setPositionAbsolute(element) {
+        element.style.setProperty("position", "absolute")
+      }
+
+      function setTopLeft(element, top, left) {
+        element.style.setProperty("top", top + "px")
+        element.style.setProperty("left", left + "px")
+      }
+
+      // Convert grid coordinates like (1, 2) to pixel values (50px, 100px)
+      function gridToPixels(n) {
+        return n * GRID_SIZE_PX
+      }
+
+      // Convert pixels to nearest grid coordinates like (55px, 5px) to (1, 0)
+      function pixelsToGrid(n) {
+        const nearestGridPixelValue = n - (n % GRID_SIZE_PX)
+        return nearestGridPixelValue / GRID_SIZE_PX
+      }
+
+      function positionOnGrid(element, x, y, center = true) {
+        // Scale the (x, y) of the grid to pixels on screen
+        const xPixels = gridToPixels(x)
+        const yPixels = gridToPixels(y)
+
+        // Center the element in the grid cell
+        let xOffset = 0
+        let yOffset = 0
+        if (center) {
+          const { height, width } = element.getBoundingClientRect()
+          if (height > 0 && width > 0) {
+            xOffset = (GRID_SIZE_PX - width) / 2
+            yOffset = (GRID_SIZE_PX - height) / 2
+          }
+        }
+
+        // Position element precisely
+        setTopLeft(element, yPixels + yOffset, xPixels + xOffset)
+      }
+
+      function positionOnGridBySelector(selector, positions) {
+        const elements = document.querySelectorAll(selector)
+        elements.forEach((e, i) => {
+          const p = positions[i]
+          if (!p) {
+            console.warn(`no position specified for ${selector} #${i}`)
+            return
+          }
+
+          positionOnGrid(e, p.x, p.y, p.center)
+          setPositionAbsolute(e)
+        })
+      }
+
+      // Returns {startX, startY, endX?, endY?} in grid coordinates for
+      // an element to be used in calculations, like obstacle definition
+      function getPositionOnGrid(element) {
+        const { scrollX, scrollY } = window
+        const { top, left, width, height } = element.getBoundingClientRect()
+        const position = {
+          startX: pixelsToGrid(scrollX + left),
+          startY: pixelsToGrid(scrollY + top)
+        }
+        if (width > GRID_SIZE_PX) {
+          const widthExceedingCell = width - GRID_SIZE_PX
+          position.endX = pixelsToGrid(scrollX + left + widthExceedingCell)
+        }
+
+        if (height > GRID_SIZE_PX) {
+          const heightExceedingCell = height - GRID_SIZE_PX
+          position.endY = pixelsToGrid(scrollY + top + heightExceedingCell)
+        }
+
+        return position
+      }
+
+      // Check if an (x, y) is beyond an area of {startX, startY, endX, endY} coordinates
+      function checkExceedCoords(x, y, coords) {
+        const endX = coords.endX ?? Infinity
+        const endY = coords.endY ?? Infinity
+        if (x < coords.startX || x > endX || y < coords.startY || y > endY) {
+          return true
+        }
+        return false
+      }
+
+      // Returns whether or not the coordinates overlap with a boundary
+      function canMoveTo(x, y) {
+        // Check boundaries
+        for (let i = 0; i < state.boundaries.length; i++) {
+          const exceeds = checkExceedCoords(x, y, state.boundaries[i])
+          if (exceeds) {
+            return false
+          }
+        }
+        return true
+      }
+
+      // Scroll the element into view if it's moved off the screen
+      function scrollIntoView(element, x, y) {
+        const { scrollX, scrollY, innerHeight, innerWidth } = window
+        const minXGridInView= pixelsToGrid(scrollX)
+        const minYGridInView= pixelsToGrid(scrollY)
+        const maxXGridInView= pixelsToGrid(innerWidth + scrollX)
+        const maxYGridInView= pixelsToGrid(innerHeight + scrollY)
+
+        // If element is out of view entirely, just scroll it into view,
+        // and don't scroll incrementally
+        if (
+          x < minXGridInView ||
+          x > maxXGridInView ||
+          y < minYGridInView ||
+          y > maxYGridInView
+        ) {
+          // console.log(`(${x}, ${y}) x: ${minXGridInView}-${maxXGridInView}, y: ${minYGridInView}-${maxYGridInView}`)
+          element.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
+          return
+        }
+
+        // Otherwise, check if element is in the buffer where scrolling
+        // should be incremented slightly to keep the element in view
+        const minXGridBuffer = minXGridInView + WINDOW_VIEW_GRID_BUFFER
+        const minYGridBuffer = minYGridInView + WINDOW_VIEW_GRID_BUFFER
+        const maxXGridBuffer = maxXGridInView - WINDOW_VIEW_GRID_BUFFER
+        const maxYGridBuffer = maxYGridInView - WINDOW_VIEW_GRID_BUFFER
+
+        let scroll = false
+        const scrollOptions = { behavior: "instant", block: "nearest" }
+        if (x <= minXGridBuffer || x >= maxXGridBuffer) {
+          scroll = true
+          scrollOptions.left = x <= minXGridBuffer ? -GRID_SIZE_PX : GRID_SIZE_PX
+        }
+        if (y <= minYGridBuffer || y >= maxYGridBuffer) {
+          scroll = true
+          scrollOptions.top = y <= minYGridBuffer ? -GRID_SIZE_PX : GRID_SIZE_PX
+        }
+        if (scroll) {
+          // console.log(`(${x}, ${y}) x: ${minXGridBuffer}-${maxXGridBuffer}, y: ${minYGridBuffer}-${maxYGridBuffer}`)
+          // console.log("scroll options:", scrollOptions)
+          window.scrollBy(scrollOptions)
+        }
+      }
+
+      function moveInvisibleElement(avatarX, avatarY) {
+        const element = document.getElementById("for-invisible-scroll")
+        if (element) {
+          const x = pixelsToGrid(window.innerWidth || 1200) + avatarX
+          const y = pixelsToGrid(window.innerHeight || 1200) + avatarY
+          // console.log(`avatar at ${avatarX}, ${avatarY}, moving invisie to ${x}, ${y}`)
+          positionOnGrid(element, x, y)
+        }
+      }
+
+      function positionAvatarOnGrid(element, x, y) {
+        const canMove = canMoveTo(x, y)
+        if (canMove) {
+          positionOnGrid(element, x, y)
+          scrollIntoView(element, x, y)
+          // Hack! :)
+          // Position an invisible element away off the
+          // screen, so that when the avatar is moving
+          // into areas where there aren't DOM elements
+          // the scroll buffer will work
+          moveInvisibleElement(x, y)
+        }
+      }
+
+      function moveDirectionOnGrid(element, direction) {
+        const { top, left } = element.getBoundingClientRect()
+        const { scrollX, scrollY } = window
+        // Convert element's position (with scroll) to grid coordinates
+        const gridX = pixelsToGrid(left + scrollX)
+        const gridY = pixelsToGrid(top + scrollY)
+        // console.log(`Nearest grid for (${left}px, ${top}px) is (${gridX}, ${gridY})`)
+        // Change grid coordinates based on direction
+        let nextGridX = gridX
+        let nextGridY = gridY
+        switch(direction) {
+          case UP:
+            nextGridY--
+            break
+          case DOWN:
+            nextGridY++
+            break
+          case LEFT:
+            nextGridX--
+            break
+          case RIGHT:
+            nextGridX++
+            break
+        }
+        // Position element with grid cooridnates
+        positionAvatarOnGrid(element, nextGridX, nextGridY)
+      }
+
+      function onArrowButtonClick(direction) {
+        const you = document.getElementById("you")
+        switch(direction) {
+          case UP:
+            moveDirectionOnGrid(you, UP)
+            break
+          case DOWN:
+            moveDirectionOnGrid(you, DOWN)
+            break
+          case LEFT:
+            moveDirectionOnGrid(you, LEFT)
+            break
+          case RIGHT:
+            moveDirectionOnGrid(you, RIGHT)
+            break
+          default:
+            return
+        }
+      }
+
+      function onKeyDown(event) {
+        switch(event.key) {
+          case 'ArrowUp':
+          case 'w':
+            event.preventDefault()
+            moveDirectionOnGrid(you, UP)
+            break
+          case 'ArrowDown':
+          case 's':
+            event.preventDefault()
+            moveDirectionOnGrid(you, DOWN)
+            break
+          case 'ArrowLeft':
+          case 'a':
+            event.preventDefault()
+            moveDirectionOnGrid(you, LEFT)
+            break
+          case 'ArrowRight':
+          case 'd':
+            event.preventDefault()
+            moveDirectionOnGrid(you, RIGHT)
+            break
+          default:
+            return
+        }
+      }
+
+      function hashPosition(pos) {
+        const id = `${pos.startX},${pos.startY}`
+        if (pos.hasOwnProperty("endX") || pos.hasOwnProperty("endY")) {
+          id += `-${pos.endX ?? ""},${pos.endY ?? ""}`
+        }
+        return id
+      }
+
+      function getParentForPatches() {
+        const main = document.querySelector("main")
+        return main ?? document.body
+      }
+
+      function addPatchToHtml(position, id, color) {
+        // Create an element
+        const element = document.createElement("figure")
+        element.setAttribute("id", id)
+        element.classList.add("cell")
+        // Set the position to the avatar's
+        positionOnGrid(element, position.startX, position.startY)
+        setPositionAbsolute(element)
+        if (color === "wave") {
+          element.classList.add("wave")
+        } else if (color === "wave-inverse") {
+          element.classList.add("wave", "wave-inverse")
+        } else {
+          element.style.setProperty("background-color", color)
+        }
+        // Add to the landscape
+        const parentElement = getParentForPatches()
+        parentElement.appendChild(element)
+
+        return element
+      }
+
+      function removePatchFromHtml(element) {
+        const parentElement = getParentForPatches()
+        parentElement.removeChild(element)
+      }
+
+      function addPatchToPage(position, id, color) {
+        addPatchToHtml(position, id, color)
+        const patch = { position, color }
+        state.landscapeMap[id] = patch
+      }
+
+      function removePatchFromPage(id) {
+        const element = document.getElementById(id)
+        if (element) {
+          removePatchFromHtml(element)
+        }
+        delete state.landscapeMap[id]
+      }
+
+      function editLandscape() {
+        const you = document.getElementById("you")
+        if (!you) {
+          return
+        }
+
+        const gridPosition = getPositionOnGrid(you)
+        const landscapeId = hashPosition(gridPosition)
+        const alreadyExists = document.getElementById(landscapeId)
+        if (alreadyExists) {
+          const alreadyPatch = state.landscapeMap[landscapeId]
+          // Remove patch from the landscape
+          removePatchFromPage(landscapeId)
+        } else if (!alreadyExists) {
+          // Add patch to the landscape
+          addPatchToPage(gridPosition, landscapeId, state.newLandscapeColor)
+        }
+      }
+
+      function changeCurrentColor(colorNumber) {
+        const index = colorNumber < 1 ? 9 : colorNumber - 1
+        state.newLandscapeColor = COLOR_PALETTE[index] ?? COLOR_PALETTE[0]
+
+        const prevPalette = document.querySelector(".palette-selected")
+        if (prevPalette) {
+          prevPalette.classList.remove("palette-selected")
+        }
+        
+        const currentPalette = document.getElementById(`palette-${colorNumber}`)
+        if (currentPalette) {
+          currentPalette.classList.add("palette-selected")
+        }
+      }
+
+      function onSpaceOrNumberPress(event) {
+        if (event.key === " ") {
+          editLandscape()
+        }
+
+        if (["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].includes(event.key)) {
+          changeCurrentColor(parseInt(event.key, 10))
+        }
+      }
+
+      function downloadWholePage() {
+        let url
+        try {
+          const page = document.documentElement.outerHTML
+          const blob = new Blob([page], { type: "text/html" });
+          url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "index-with-landscape.html";
+          link.click();
+        } catch (err) {
+          console.error("failed to download new landscape patches", err)
+          console.log("instead, you can copy the html in the 'Elements' tab")
+        } finally {
+          // for memory management
+          URL.revokeObjectURL(url)
+        }
+      }
+
+      function removeInstructions() {
+        const toRemove = ["island-instructions", "pointer"]
+        toRemove.forEach((id) => {
+          const element = document.getElementById(id)
+          if (element) {
+            element.remove()
+          }
+        })
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+         // position elements on grid based on their pre-defined locations
+        for (const selector of Object.keys(initialPositions)) {
+          const positions = initialPositions[selector]
+          positionOnGridBySelector(selector, positions)
+        }
+
+        // display helpful buttons and options that are only
+        // relevant when you're drawing on the site, not
+        // when it's published and the landscape is fixed
+        if (!IS_ONION_SITE) {
+          const selectors = ["#palette", "#save-button", "#space-button"]
+          selectors.forEach((s) => showOrHideSelector(s))
+        }
+
+        // Move the avatar based on arrow presses
+        document.addEventListener("keydown", onKeyDown)
+        // Add elements to the landscape based on avatar position
+        document.addEventListener("keydown", onSpaceOrNumberPress)
+
+      })
+    </script>
+  </head>
+  <body>
+    <header>
+      <!-- This is where we'll create an onion web ring with link!!! -->
+      <a href="#place-url-here">previous onion ring</a>
+      <b> ← ← ← ← ← ← → → → → → → </b>
+      <a href="#place-url-here">next onion ring</a>
+    </header>
+    <main>
+      <section id="island-instructions" class="info-section" style="position: absolute; left: 100px; top: 200px;">
+        <p class="info"><u>Welcome to this simple site generator!</u></p>
+        <p class="info">
+          This site lets you draw with pixelated tiles and save the result as a website.
+        </p>
+        <p class="info">
+          Here's how it works:
+        </p>
+        <ol class="info-list">
+          <li>
+            Move the avatar <u><b>you</b></u> around by using the arrow keys on your keyboard or the buttons in the <b><span class="mini-symbol">▶</span>&nbsp;controls</b> menu.
+          </li>
+          <li>
+            Press <code>space</code> to place a tile on the grid, and press <code>space</code> again to remove the tile.
+          </li>
+          <li>
+            Press any number between <code>0</code> and <code>9</code> on your keyboard to change the current tile color or use the buttons in the <b><span class="mini-symbol">▶</span>&nbsp;palette</b> menu.
+          </li>
+          <li>
+            Whenever you're done drawing, click the <code>save</code> button to download this page with your edits.
+          </li>
+        </ol>
+        <p class="info">
+          <i>Tip:</i> you'll want to name the file <code>index.html</code> when you save it, so it's the default page of your site.
+        </p>
+        <button class="dismiss-button" onclick="removeInstructions()">close instructions</button>
+      </section>
+      <p id="pointer" class="center start-here">← start here</p>
+      <figure id="you" class="cell center">you</figure>
+
+      <!-- A random element that's out of view to make the landscape scrolling less awkward -->
+      <div id="for-invisible-scroll" class="hack" style="position: absolute; left: 2500px; top: 2500px;" aria-hidden="true"></div>
+    </main>
+
+    <section role="toolbar" class="controls">
+      <details id="palette" class="controls-details hidden" open>
+        <summary class="controls-label">palette</summary>
+        <div class="palette-wrapper">
+          <button id="palette-1" class="controls-button palette" style="background-color: sienna; color: white;" aria-label="select brown" onclick="changeCurrentColor(1)">1</button>
+          <button id="palette-2" class="controls-button palette" style="background-color: green; color: white;" aria-label="select green" onclick="changeCurrentColor(2)">2</button>
+          <button id="palette-3" class="controls-button palette" style="background-color: blue; color: white;" aria-label="select blue" onclick="changeCurrentColor(3)">3</button>
+          <button id="palette-4" class="controls-button palette" style="background-color: gray; color: white;" aria-label="select gray" onclick="changeCurrentColor(4)">4</button>
+          <button id="palette-5" class="controls-button palette" style="background-color: wheat;" aria-label="select yellow" onclick="changeCurrentColor(5)">5</button>
+          <button id="palette-6" class="controls-button palette" style="background-color: goldenrod;" aria-label="select gold" onclick="changeCurrentColor(6)">6</button>
+          <button id="palette-7" class="controls-button palette" style="background-color: purple; color: white;" aria-label="select purple" onclick="changeCurrentColor(7)">7</button>
+          <button id="palette-8" class="controls-button palette" style="background-color: violet;" aria-label="select violet" onclick="changeCurrentColor(8)">8</button>
+          <button id="palette-9" class="controls-button palette wave" aria-label="select wave" onclick="changeCurrentColor(9)">9</button>
+          <button id="palette-0" class="controls-button palette wave wave-inverse palette-selected" aria-label="select wave with blue background" onclick="changeCurrentColor(0)">0</button>
+        </div>
+      </details>
+      <details class="controls-details" open>
+        <summary class="controls-label">
+          controls
+        </summary>
+        <button id="save-button" class="controls-button two-cell-h hidden" onclick="downloadWholePage()" aria-label="save page">save</button>
+        <button class="controls-button" aria-label="move up" onclick="onArrowButtonClick('up')">↑</button>
+        <button class="controls-button" aria-label="move down" onclick="onArrowButtonClick('down')">↓</button>
+        <button class="controls-button" aria-label="move left" onclick="onArrowButtonClick('left')">←</button>
+        <button class="controls-button" aria-label="move right" onclick="onArrowButtonClick('right')">→</button>
+        <button id="space-button" class="controls-button hidden" aria-label="place earth" onclick="editLandscape()">s</button>
+      </details>
+    </section>
+    <div class="veil disappear" aria-hidden></div>
+  </body>
+</html>

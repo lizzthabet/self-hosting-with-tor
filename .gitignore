@@ -11,7 +11,7 @@ docs/build
 # Generated files
 .cache-loader
 .hugo_build.lock
-public/
+docs/public/
 resources/
 
 # Misc
