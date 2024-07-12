@@ -354,6 +354,7 @@
       const RIGHT = 'right'
       const WINDOW_VIEW_GRID_BUFFER = 5;
       const IS_ONION_SITE = window.location && window.location.host.endsWith(".onion")
+      const TO_HIDE_FOR_SAVE = ["#palette", "#save-button", "#space-button"]
 
       const initialPositions = {
         "#you": [{ x: 2, y: 2 }],
@@ -735,6 +736,7 @@
       function downloadWholePage() {
         let url
         try {
+          TO_HIDE_FOR_SAVE.forEach((s) => showOrHideSelector(s, false))
           const page = document.documentElement.outerHTML
           const blob = new Blob([page], { type: "text/html" });
           url = URL.createObjectURL(blob);
@@ -748,6 +750,10 @@
         } finally {
           // for memory management
           URL.revokeObjectURL(url)
+          // show elements again for edit
+          setTimeout(() => {
+            TO_HIDE_FOR_SAVE.forEach((s) => showOrHideSelector(s))
+          }, 500)
         }
       }
 
@@ -772,8 +778,7 @@
         // relevant when you're drawing on the site, not
         // when it's published and the landscape is fixed
         if (!IS_ONION_SITE) {
-          const selectors = ["#palette", "#save-button", "#space-button"]
-          selectors.forEach((s) => showOrHideSelector(s))
+          TO_HIDE_FOR_SAVE.forEach((s) => showOrHideSelector(s))
         }
 
         // Move the avatar based on arrow presses
