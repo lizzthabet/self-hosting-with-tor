@@ -5,16 +5,19 @@ This repository is a developing guide to hosting websites using Tor, a privacy-c
     * [`docs/content/index.md`](https://github.com/lizzthabet/self-hosting-with-tor/blob/main/docs/content/index.md): markdown version of the guide
   * `site/`: a sample site and files you can use to follow the guide
 
-## Just for ease! Links for the HOPE 2024 workshop
-* [Spreadsheet to add your onion url to](https://cryptpad.fr/sheet/#/2/sheet/edit/dhKYJzIPlJf+ZWsLe4rjA7uz/p/) ✎ let's make this onion ring!
-* [Feedback survey](https://cryptpad.fr/form/#/2/form/view/wNqlvnRBSQag2Wc45mDptI+z8rT6bgBinqh7PNvFwNE/) ♡ feedback is a gift
+## Just for ease! Links for the DeepMay workshop
+* [Spreadsheet to add your onion url to](TODO) ✎ let's make this onion ring!
+* [Feedback survey](TODO) ♡ feedback is a gift
 
 ### Plus, these are the tools we'll install
 * [Tor Browser](https://torproject.org/download)
-* [Brave Browser](https://brave.com/download)
 * [OnionShare](https://onionshare.org/)
+
+If you're sticking around for the deep-dive, you'll also need:
 * [Tor](https://community.torproject.org/onion-services/setup/install) (aka little-t tor)
-* [Tor Expert Bundle](https://torproject.org/download/tor/)
+* [Tor Expert Bundle](https://torproject.org/download/tor/) (if you're on Windows)
+
+Instructions are:
 * [Self-hosting with Tor guide](https://self-host.lizz.website) (the online version, not the source code)
 
 ![a simple b&w line drawing of two desktop computers connected with a dotted line and in the center of their connection is an onion inside a thought-bubble cloud](onion-computers.png)
