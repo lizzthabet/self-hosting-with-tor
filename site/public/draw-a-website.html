@@ -520,7 +520,9 @@
         const maxYGridBuffer = maxYGridInView - WINDOW_VIEW_GRID_BUFFER
 
         let scroll = false
-        const scrollOptions = { behavior: "instant", block: "nearest" }
+        // Ideally, behavior would be set to "instant", but Tor Browser has a glitch-y rendering,
+        // so smooth scrolling is more pleasant.
+        const scrollOptions = { behavior: "smooth", block: "nearest" }
         if (x <= minXGridBuffer || x >= maxXGridBuffer) {
           scroll = true
           scrollOptions.left = x <= minXGridBuffer ? -GRID_SIZE_PX : GRID_SIZE_PX
@@ -742,7 +744,7 @@
           url = URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url;
-          link.download = "index-with-landscape.html";
+          link.download = "index.html";
           link.click();
         } catch (err) {
           console.error("failed to download new landscape patches", err)
