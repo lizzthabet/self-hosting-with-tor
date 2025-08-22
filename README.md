@@ -6,8 +6,9 @@ This repository is a developing guide to hosting websites using Tor, a privacy-c
   * `site/`: a sample site and files you can use to follow the guide
 
 ## Just for ease! Links for the DeepMay workshop
-* [Spreadsheet to add your onion url to](TODO) ✎ let's make this onion ring!
-* [Feedback survey](TODO) ♡ feedback is a gift
+* [Shared note-taking space](https://kinopio.club/invite?spaceId=rinINgCN5EDV6rnceP4yO&collaboratorKey=EmNW8t68IY7Ob7ljhXFHF&name=our-onion-notes-8-2025-) ⬚ we can doodle together
+* [Spreadsheet to add your onion url to](https://cryptpad.fr/sheet/#/2/sheet/edit/2w65B315HWq5qJcl+L6BxFgZ/p/embed/) ✎ let's make this onion ring!
+* [Super short feedback survey](https://cryptpad.fr/form/#/2/form/view/bSOh0DzyQmvXmU6Osdk44i9DGwIfzZYA6qLuClUCoWo/) ♡ feedback is a gift
 
 ### Plus, these are the tools we'll install
 * [Tor Browser](https://torproject.org/download)
